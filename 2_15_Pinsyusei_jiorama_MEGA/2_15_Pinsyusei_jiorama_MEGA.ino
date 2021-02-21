@@ -528,11 +528,11 @@ e_old = e;
 e = 0;*/
 
 //列車衝突防止
-if(Train[1]>3 && Train[1]<15){
+if(Train[1]>4 && Train[1]<15){
 //collision();
 }
-if(Train[2]>3 && Train[2]<15){
-//collision();
+if(Train[2]>4 && Train[2]<15){
+collision();
 }
 
 
@@ -597,20 +597,31 @@ void collision(){
 //Train[2]4
 if(Train[2]<Train[2]+1 && Train[2]>Train[2]-1){
  
+  if((Train[2]+1)-Train[2]==1 ){
+    TrainOutFlag2S = 0;
+     TrainOutFlag2M = 0;
+  Train2Stop();
+  Serial.println("Train2Stop();");
+  }
   if(Train[1]-Train[2]==1 ){
+    TrainOutFlag2S = 0;
+     TrainOutFlag2M = 0;
   Train2Stop();
   Serial.println("Train2Stop();");
   }
   if( Train[1]-Train[2]==2 ){
   Train2Slow();
-  //TrainOutFlag2S = 1;
-  //TrainOutFlag2M = 1;
+  TrainOutFlag2S = 1;
+  TrainOutFlag2M = 1;
   Serial.println("Train2Slow();");
   }
-  //if( sTrainPo[Train[2]+1]==0 && sTrainPo[Train[2]]==0 && sTrainPo[Train[2]-1]==1 ){
- // Train2Fast();
- // Serial.println("Train2Fast();");
- // }
+  if( Train[1]-Train[2]==3 ){
+  Train2Fast();
+  TrainOutFlag2S = 1;
+  TrainOutFlag2M = 1;
+  Serial.println("Train2Fast();");
+  }
+ 
   
 }
 //Train[3]
@@ -716,7 +727,6 @@ void Outflag1234(){
   }
   if (sw == 'B') {
    TrainOutFlag2M = 1;
-   Train2StopF(); 
    Train2Slow();
 }
   if(digitalRead(35)==1 && digitalRead(36)==0 && digitalRead(37)==0){
